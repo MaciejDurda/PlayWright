@@ -38,14 +38,14 @@ test("Range DataTime - Date Picker", async ({ page, context }) => {
   const datePicker = new DatePickerPage(page);
   await datePicker.getRangeDateTimePickerInput().click();
   await datePicker.rangeDatePickerCalendar(
-    "10",
-    "March",
-    "1995",
     "22",
     "March",
+    "1995",
+    "15",
+    "December",
     "2024"
   );
   await expect(datePicker.getRangeDateTimePickerInput()).toHaveValue(
-    "1994-07-22 to 1995-03-10"
+    "1995-03-22 to 2024-12-15"
   );
 });
