@@ -6,37 +6,70 @@ export class DatePickerPage extends HelperBase {
   private readonly title: Locator;
   private readonly basicDateTimeInput: Locator;
   private readonly rangeDateTimeInput: Locator;
-  private readonly weekDateTimeSelector: Locator;
-  private readonly TimePickerSelector: Locator;
+  private readonly weekDateTimeInput: Locator;
+  private readonly timePickerInput: Locator;
   private readonly basicCalendar: Locator;
   private readonly rangeCalendar: Locator;
+  private readonly weekCalendar: Locator;
+  private readonly timeCalendar: Locator;
+  private readonly resetButton: Locator;
 
   constructor(page: Page) {
     super(page);
     this.title = page.locator("#content");
     this.basicDateTimeInput = page.locator("#basicDate");
     this.rangeDateTimeInput = page.locator("#rangeDate");
+    this.weekDateTimeInput = page.locator(".resetDate input");
+    this.timePickerInput = page.locator("#timePicker");
     this.basicCalendar = page.locator(
       ".flatpickr-calendar.hasTime.animate.arrowTop"
     );
     this.rangeCalendar = page.locator(".flatpickr-calendar.rangeMode");
+    this.weekCalendar = page.locator(".flatpickr-calendar.hasWeeks");
+    this.timeCalendar = page.locator(".flatpickr-time.time24hr");
+    this.resetButton = page.locator(".input-button");
   }
 
   getTitle() {
     return this.title;
   }
-
   getBasicDateTimeInput() {
     return this.basicDateTimeInput;
   }
   getRangeDateTimePickerInput() {
     return this.rangeDateTimeInput;
   }
+  getWeekDatePickerInput() {
+    return this.weekDateTimeInput;
+  }
+  getTimePickerInput() {
+    return this.timePickerInput;
+  }
   getBasicCalendar() {
     return this.basicCalendar;
   }
   getRangeCalendar() {
     return this.rangeCalendar;
+  }
+  getWeekCalendar() {
+    return this.weekCalendar;
+  }
+  getTimeCalendar() {
+    return this.timeCalendar;
+  }
+  getResetButton() {
+    return this.resetButton;
+  }
+  async timePickerCalendar(time: string) {
+    await this.pickTime(time, this.getTimeCalendar());
+    await this.getTitle().click();
+  }
+
+  async weekDatePickerCalendar(day: string, month: string, year: string) {
+    await this.pickYear(year, this.getWeekCalendar());
+    await this.pickMonth(month, this.getWeekCalendar());
+    await this.pickDay(day, month, year, this.getWeekCalendar());
+    await this.getTitle().click();
   }
 
   async rangeDatePickerCalendar(
